@@ -7,6 +7,7 @@ use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 
 final class Transaction extends AbstractResource
 {
+
     /**
      * Transaction constructor.
      * @param CardflowHttpClientInterface $httpClient
@@ -30,42 +31,42 @@ final class Transaction extends AbstractResource
 
     public function getId(): ?string
     {
-        return $this->container['id'] ? strval($this->container['id']) : null;
+        return $this->container['id'];
     }
 
     public function getAmount(): int
     {
-        return intval($this->container['amount']);
+        return $this->container['amount'];
     }
 
     public function getCurrency(): ?string
     {
-        return $this->container['currency'] ? strval($this->container['currency']) : null;
+        return $this->container['currency'];
     }
 
     public function getStatus(): ?string
     {
-        return $this->container['status'] ? strval($this->container['status']) : null;
+        return $this->container['status'];
     }
 
     public function getType(): ?string
     {
-        return $this->container['type'] ? strval($this->container['type']) : null;
+        return $this->container['type'];
     }
 
     public function getDescription(): ?string
     {
-        return $this->container['description'] ? strval($this->container['description']) : null;
+        return $this->container['description'];
     }
 
     public function getCapturedAt(): ?string
     {
-        return $this->container['captured_at'] ? strval($this->container['captured_at']) : null;
+        return $this->container['captured_at'];
     }
 
     public function getCreatedAt(): ?string
     {
-        return $this->container['created_at'] ? strval($this->container['created_at']) : null;
+        return $this->container['created_at'];
     }
 
     public function isCapturable(): bool

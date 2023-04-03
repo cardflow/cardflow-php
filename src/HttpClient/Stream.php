@@ -9,7 +9,7 @@ final class Stream implements StreamInterface
     /**
      * @var string
      */
-    private string $body;
+    private $body;
 
     /**
      * Stream constructor.
@@ -20,13 +20,14 @@ final class Stream implements StreamInterface
         $this->body = $body;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         return $this->body;
     }
 
-    public function close(): void
+    public function close()
     {
+        return;
     }
 
     public function detach()
@@ -39,17 +40,17 @@ final class Stream implements StreamInterface
         return null;
     }
 
-    public function tell(): int
+    public function tell()
     {
         return 0;
     }
 
-    public function eof(): bool
+    public function eof()
     {
         return true;
     }
 
-    public function isSeekable(): bool
+    public function isSeekable()
     {
         return false;
     }
@@ -62,27 +63,27 @@ final class Stream implements StreamInterface
     {
     }
 
-    public function isWritable(): bool
+    public function isWritable()
     {
         return false;
     }
 
-    public function write($string): int
+    public function write($string)
     {
         return 0;
     }
 
-    public function isReadable(): bool
+    public function isReadable()
     {
         return true;
     }
 
-    public function read($length): string
+    public function read($length)
     {
         return '';
     }
 
-    public function getContents(): string
+    public function getContents()
     {
         return $this->body;
     }

@@ -4,7 +4,7 @@ namespace Cardflow\Client\Resources;
 
 use Cardflow\Client\Exceptions\MissingParameterException;
 use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
-use Cardflow\Client\Services\GiftCardTransactionService;
+use Cardflow\Client\Services\TransactionService;
 
 /**
  * Class GiftCard
@@ -15,15 +15,12 @@ final class GiftCard extends AbstractResource
     /**
      * @var string
      */
-    protected string $apiIdentifierField = 'code';
+    protected $apiIdentifierField = 'code';
 
     /**
-     * @var GiftCardTransactionService
-     * @deprecated 1.3.0 Retrieving transactions through the GiftCard object is deprecated. Please use
-     * $giftyClient->transactions instead.
-     * @see TransactionService
+     * @var TransactionService
      */
-    public GiftCardTransactionService $transactions;
+    public $transactions;
 
     /**
      * GiftCard constructor.
@@ -42,53 +39,42 @@ final class GiftCard extends AbstractResource
         $this->container['promotional'] = $data['promotional'] ?? null;
         $this->container['is_redeemable'] = $data['is_redeemable'] ?? false;
         $this->container['is_issuable'] = $data['is_issuable'] ?? false;
-        $this->container['is_extendable'] = $data['is_extendable'] ?? false;
-        $this->container['expires_at'] = $data['expires_at'] ?? null;
         $this->container['created_at'] = $data['created_at'] ?? null;
         $this->container['transactions'] = $data['transactions'] ?? null;
-        $this->transactions = new GiftCardTransactionService($httpClient, $this);
+        $this->transactions = new TransactionService($httpClient, $this);
     }
 
     public static function cleanCode(string $code): string
     {
         $code = str_replace(' ', '', $code);
         $code = str_replace('-', '', $code);
-        $code = strtoupper($code);
+
         return $code;
     }
 
     public function getId(): ?string
     {
-        return $this->container['id'] ? strval($this->container['id']) : null;
+        return $this->container['id'];
     }
 
     public function getBalance(): int
     {
-        return intval($this->container['balance']);
+        return $this->container['balance'];
     }
 
     public function getCurrency(): ?string
     {
-        return $this->container['currency'] ? strval($this->container['currency']) : null;
+        return $this->container['currency'];
     }
 
     public function getPromotional(): ?bool
     {
-        if ($this->container['promotional'] === null) {
-            return null;
-        }
-
-        return boolval($this->container['promotional']);
-    }
-
-    public function getExpiresAt(): ?string
-    {
-        return $this->container['expires_at'] ? strval($this->container['expires_at']) : null;
+        return $this->container['promotional'];
     }
 
     public function getCreatedAt(): ?string
     {
-        return $this->container['created_at'] ? strval($this->container['created_at']) : null;
+        return $this->container['created_at'];
     }
 
     public function isRedeemable(): bool
@@ -99,10 +85,5 @@ final class GiftCard extends AbstractResource
     public function isIssuable(): bool
     {
         return $this->container['is_issuable'] === true;
-    }
-
-    public function isExtendable(): bool
-    {
-        return $this->container['is_extendable'] === true;
     }
 }

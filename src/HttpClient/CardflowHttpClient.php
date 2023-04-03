@@ -2,7 +2,6 @@
 
 namespace Cardflow\Client\HttpClient;
 
-use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
 final class CardflowHttpClient implements CardflowHttpClientInterface
@@ -10,19 +9,19 @@ final class CardflowHttpClient implements CardflowHttpClientInterface
     /**
      * @var array<string>
      */
-    private array $headers;
+    private $headers;
     /**
      * @var string
      */
-    private string $endpoint;
+    private $endpoint;
     /**
      * @var int
      */
-    private int $timeout;
+    private $timeout;
     /**
      * @var int
      */
-    private int $connectionTimeout;
+    private $connectionTimeout;
 
     public function __construct(string $endpoint, int $timeout = 10, int $connectionTimeout = 2, array $headers = [])
     {
@@ -32,55 +31,22 @@ final class CardflowHttpClient implements CardflowHttpClientInterface
         $this->headers = $headers;
     }
 
-    /**
-     * @inheritDoc
-     */
     public static function getClientName(): string
     {
         return 'CardflowHttpClient';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setAccessToken(string $token): void
+    public function setAccessToken(string $token)
     {
         $this->headers['Authorization'] = 'Bearer ' . $token;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function request(string $method, string $path, array $options = []): ResponseInterface
     {
         $url = $this->endpoint . $path;
         $this->headers['Content-Type'] = 'application/json';
         $headers = $this->parseHeaders();
         $responseHeaders = [];
-
-        // Apply query parameters
-        // @see https://github.com/guzzle/guzzle/blob/82ca75f0b1f130f018febdda29af13086da5dbac/src/Client.php#L420
-        if (isset($options['query'])) {
-            $value = $options['query'];
-
-            if (is_array($value)) {
-                $value = http_build_query($value, '', '&', PHP_QUERY_RFC3986);
-            }
-
-            if (!is_string($value)) {
-                throw new InvalidArgumentException('query must be a string or array');
-            }
-
-            $urlContainsQuery = parse_url($url, PHP_URL_QUERY);
-
-            if ($urlContainsQuery) {
-                $url .= '&' . $value;
-            } else {
-                $url .= '?' . $value;
-            }
-
-            unset($options['query']);
-        }
 
         $ch = curl_init();
         curl_setopt_array(
@@ -139,16 +105,18 @@ final class CardflowHttpClient implements CardflowHttpClientInterface
     /**
      * @param string $response
      * @param array<array<string>> $headers
-     * @param \CurlHandle $ch
+     * @param resource $ch
      * @return ResponseInterface
      */
     private function buildPsrResponse(string $response, array $headers, $ch): ResponseInterface
     {
-        return new HttpResponse(
+        $response = new HttpResponse(
             curl_getinfo($ch, CURLINFO_HTTP_CODE),
             '1.1',
             $response,
             $headers
         );
+
+        return $response;
     }
 }

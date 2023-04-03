@@ -10,19 +10,19 @@ abstract class AbstractResource
     /**
      * @var string
      */
-    protected string $apiIdentifierField = 'id';
+    protected $apiIdentifierField = 'id';
 
     /**
      * Associative array for storing property values
      *
-     * @var array<string, string|int|bool|null>
+     * @var mixed[]
      */
-    protected array $container = [];
+    protected $container = [];
 
     /**
      * @var CardflowHttpClientInterface
      */
-    protected CardflowHttpClientInterface $httpClient;
+    protected $httpClient;
 
     /**
      * AbstractResource constructor.
@@ -43,6 +43,6 @@ abstract class AbstractResource
 
     public function getApiIdentifier(): string
     {
-        return strval($this->container[$this->apiIdentifierField]);
+        return $this->container[$this->apiIdentifierField];
     }
 }

@@ -7,6 +7,7 @@ use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 
 final class Location extends AbstractResource
 {
+
     /**
      * Location constructor.
      * @param CardflowHttpClientInterface $httpClient
@@ -27,31 +28,31 @@ final class Location extends AbstractResource
 
     public function getId(): ?string
     {
-        return $this->container['id'] ? strval($this->container['id']) : null;
+        return $this->container['id'];
     }
 
     public function getStreet(): ?string
     {
-        return $this->container['street'] ? strval($this->container['street']) : null;
+        return $this->container['street'];
     }
 
     public function getHouseNumber(): ?string
     {
-        return $this->container['house_number'] ? strval($this->container['house_number']) : null;
+        return $this->container['house_number'];
     }
 
     public function getAddition(): ?string
     {
-        return $this->container['addition'] ? strval($this->container['addition']) : null;
+        return $this->container['addition'];
     }
 
     public function getPostalCode(): ?string
     {
-        return $this->container['postal_code'] ? strval($this->container['postal_code']) : null;
+        return $this->container['postal_code'];
     }
 
     public function getCity(): ?string
     {
-        return $this->container['city'] ? strval($this->container['city']) : null;
+        return $this->container['city'];
     }
 }

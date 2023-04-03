@@ -6,29 +6,25 @@ use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 use Cardflow\Client\Services\AbstractService;
 use Cardflow\Client\Services\GiftCardService;
 use Cardflow\Client\Services\LocationService;
-use Cardflow\Client\Services\PackageService;
-use Cardflow\Client\Services\TransactionService;
 
 final class ServiceFactory
 {
     /**
      * @var CardflowHttpClientInterface
      */
-    private CardflowHttpClientInterface $httpClient;
+    private $httpClient;
 
     /**
      * @var array<AbstractService>
      */
-    private array $services;
+    private $services;
 
     /**
-     * @var array<string, class-string<AbstractService>>
+     * @var array<string, class-string>
      */
     protected static $classMap = [
-        'giftCards'    => GiftCardService::class,
-        'transactions' => TransactionService::class,
-        'locations'    => LocationService::class,
-        'packages'     => PackageService::class,
+        'giftCards' => GiftCardService::class,
+        'locations' => LocationService::class,
     ];
 
     /**
@@ -41,10 +37,6 @@ final class ServiceFactory
         $this->services = [];
     }
 
-    /**
-     * @param string $name
-     * @return AbstractService|null
-     */
     public function __get(string $name): ?AbstractService
     {
         if (array_key_exists($name, self::$classMap) === false) {

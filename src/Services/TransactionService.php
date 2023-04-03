@@ -3,7 +3,9 @@
 namespace Cardflow\Client\Services;
 
 use Cardflow\Client\Exceptions\ApiException;
+use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 use Cardflow\Client\Resources\Collection;
+use Cardflow\Client\Resources\GiftCard;
 use Cardflow\Client\Resources\Transaction;
 use Cardflow\Client\Services\Operation\All;
 use Cardflow\Client\Services\Operation\Get;
@@ -11,7 +13,7 @@ use Cardflow\Client\Services\Operation\Get;
 /**
  * Class TransactionService
  * @package Cardflow\Client\Service
- * @method Transaction[]|Collection all(array $options = [])
+ * @method Transaction[]|Collection all()
  * @method Transaction get(string $id)
  */
 final class TransactionService extends AbstractService
@@ -20,6 +22,17 @@ final class TransactionService extends AbstractService
     use Get;
 
     protected const API_PATH = 'transactions';
+    protected const API_PATH_PARENT = 'giftcards';
+
+    /**
+     * TransactionsService constructor.
+     * @param CardflowHttpClientInterface $httpClient
+     * @param GiftCard $parentResource
+     */
+    public function __construct(CardflowHttpClientInterface $httpClient, GiftCard $parentResource)
+    {
+        parent::__construct($httpClient, $parentResource);
+    }
 
     protected function getResourceClassPath(): string
     {

@@ -2,23 +2,19 @@
 
 namespace Cardflow\Client\Services\Operation;
 
-use Cardflow\Client\Exceptions\ApiException;
 use Cardflow\Client\Resources\AbstractResource;
 use Cardflow\Client\Resources\Collection;
 
 trait All
 {
+
     /**
-     * @param array<string, int|bool|string|null> $options
      * @return Collection<AbstractResource>
-     * @throws ApiException
      */
-    public function all(array $options = []): Collection
+    public function all(): Collection
     {
         $path = $this->buildApiPath();
-        $response = $this->httpClient->request('GET', $path, [
-            'query' => $options,
-        ]);
+        $response = $this->httpClient->request('GET', $path);
         $resources = $this->parseApiResponse($response);
         $resourceClass = $this->getResourceClassPath();
         $collection = new Collection();

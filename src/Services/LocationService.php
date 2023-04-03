@@ -9,7 +9,7 @@ use Cardflow\Client\Services\Operation\All;
 /**
  * Class LocationService
  * @package Cardflow\Client\Service
- * @method Location[]|Collection all(array $options = [])
+ * @method Location[]|Collection all()
  */
 final class LocationService extends AbstractService
 {

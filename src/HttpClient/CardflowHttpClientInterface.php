@@ -25,14 +25,14 @@ interface CardflowHttpClientInterface
 
     /**
      * @param string $token
-     * @return void
+     * @return mixed
      */
-    public function setAccessToken(string $token): void;
+    public function setAccessToken(string $token);
 
     /**
      * @param string $method
      * @param string $path
-     * @param array<string, array<string, int|bool|string|null>|int|bool|string|null> $options
+     * @param array<string, bool|int|string> $options
      * @return ResponseInterface
      * @throws ApiException
      */

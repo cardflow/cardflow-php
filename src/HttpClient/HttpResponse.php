@@ -10,19 +10,19 @@ final class HttpResponse implements ResponseInterface
     /**
      * @var int
      */
-    private int $statusCode;
+    private $statusCode;
     /**
      * @var string
      */
-    private string $body;
+    private $body;
     /**
      * @var string
      */
-    private string $protocolVersion;
+    private $protocolVersion;
     /**
      * @var array<array<string>>
      */
-    private array $headers;
+    private $headers;
 
     /**
      * HttpResponse constructor.
@@ -43,27 +43,27 @@ final class HttpResponse implements ResponseInterface
         $this->headers = $headers;
     }
 
-    public function getProtocolVersion(): string
+    public function getProtocolVersion()
     {
         return $this->protocolVersion;
     }
 
-    public function withProtocolVersion($version): self
+    public function withProtocolVersion($version)
     {
         return $this;
     }
 
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->headers;
     }
 
-    public function hasHeader($name): bool
+    public function hasHeader($name)
     {
         return array_key_exists($name, $this->headers);
     }
 
-    public function getHeader($name): array
+    public function getHeader($name)
     {
         if ($this->hasHeader($name) === false) {
             return [];
@@ -72,47 +72,47 @@ final class HttpResponse implements ResponseInterface
         return $this->headers[$name];
     }
 
-    public function getHeaderLine($name): string
+    public function getHeaderLine($name)
     {
-        return implode(',', $this->getHeader($name));
+        return implode(',', $this->headers);
     }
 
-    public function withHeader($name, $value): self
-    {
-        return $this;
-    }
-
-    public function withAddedHeader($name, $value): self
+    public function withHeader($name, $value)
     {
         return $this;
     }
 
-    public function withoutHeader($name): self
+    public function withAddedHeader($name, $value)
     {
         return $this;
     }
 
-    public function getBody(): Stream
+    public function withoutHeader($name)
+    {
+        return $this;
+    }
+
+    public function getBody()
     {
         return new Stream($this->body);
     }
 
-    public function withBody(StreamInterface $body): self
+    public function withBody(StreamInterface $body)
     {
         return $this;
     }
 
-    public function getStatusCode(): int
+    public function getStatusCode()
     {
         return $this->statusCode;
     }
 
-    public function withStatus($code, $reasonPhrase = ''): self
+    public function withStatus($code, $reasonPhrase = '')
     {
         return $this;
     }
 
-    public function getReasonPhrase(): string
+    public function getReasonPhrase()
     {
         return '';
     }

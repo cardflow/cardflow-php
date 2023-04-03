@@ -8,16 +8,12 @@ use Cardflow\Client\HttpClient\CardflowHttpClient;
 use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 use Cardflow\Client\Services\GiftCardService;
 use Cardflow\Client\Services\LocationService;
-use Cardflow\Client\Services\PackageService;
-use Cardflow\Client\Services\TransactionService;
 
 /**
  * Class CardflowClient
  * @package Cardflow\Client
  * @property GiftCardService $giftCards
- * @property TransactionService $transactions
  * @property LocationService $locations
- * @property PackageService $packages
  */
 final class CardflowClient
 {
@@ -27,37 +23,29 @@ final class CardflowClient
     /**
      * @var string
      */
-    private string $apiEndpoint = 'https://api.cardhub.nl/api/v1/';
-
-    /**
-     * @var array<string, string>
-     */
-    private array $apiHeaders = [];
+    //private $apiEndpoint = 'http://api.cardhub.nl/api/v1/';
+    private $apiEndpoint = 'http://api.cardhub.mv-ict.nl/api/v1/';
 
     /**
      * @var CardflowHttpClientInterface
      */
-    private CardflowHttpClientInterface $httpClient;
+    private $httpClient;
 
     /**
      * @var ServiceFactory
      */
-    private ServiceFactory $serviceFactory;
+    private $serviceFactory;
 
     /**
      * CardflowClient constructor.
      * @param string $apiKey
-     * @param array<string, string|array<string, string>> $options
+     * @param array<string, string> $options
      * @param CardflowHttpClientInterface|null $httpClient
      */
-    public function __construct(string $apiKey, array $options = [], ?CardflowHttpClientInterface $httpClient = null)
+    public function __construct(string $apiKey, $options = [], ?CardflowHttpClientInterface $httpClient = null)
     {
-        if (isset($options['api_endpoint']) && is_string($options['api_endpoint'])) {
+        if (isset($options['api_endpoint'])) {
             $this->setApiEndpoint($options['api_endpoint']);
-        }
-
-        if (isset($options['api_headers']) && is_array($options['api_headers'])) {
-            $this->setApiHeaders($options['api_headers']);
         }
 
         $this->setHttpClient($httpClient);
@@ -66,11 +54,12 @@ final class CardflowClient
 
     /**
      * @param string $name
-     * @return Services\AbstractService|null
+     *
+     * @return mixed|null
      */
     public function __get(string $name)
     {
-        if (false === isset($this->serviceFactory)) {
+        if (null === $this->serviceFactory) {
             $this->serviceFactory = new ServiceFactory($this->httpClient);
         }
 
@@ -90,7 +79,7 @@ final class CardflowClient
 
     /**
      * Set the HTTP client to our default (Curl) or use the user
-     * specified client. This is useful for testing, so we can use
+     * specified client. This is useful for testing so we can use
      * the Guzzle Mock client.
      * @param CardflowHttpClientInterface|null $httpClient
      * @return CardflowClient
@@ -107,13 +96,10 @@ final class CardflowClient
             $this->apiEndpoint,
             10,
             2,
-            array_merge(
-                [
+            [
                 'User-Agent' => $this->getUserAgent(CardflowHttpClient::getClientName()),
                 'Accept' => 'application/json',
-                ],
-                $this->apiHeaders,
-            )
+            ]
         );
 
         return $this;
@@ -122,16 +108,6 @@ final class CardflowClient
     private function setApiEndpoint(string $endpoint): self
     {
         $this->apiEndpoint = $endpoint;
-
-        return $this;
-    }
-
-    /**
-     * @param array<string, string> $headers
-     */
-    private function setApiHeaders(array $headers): self
-    {
-        $this->apiHeaders = $headers;
 
         return $this;
     }
