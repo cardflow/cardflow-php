@@ -7,13 +7,11 @@ use Cardflow\Client\Factories\ServiceFactory;
 use Cardflow\Client\HttpClient\CardflowHttpClient;
 use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 use Cardflow\Client\Services\GiftCardService;
-use Cardflow\Client\Services\LocationService;
 
 /**
  * Class CardflowClient
  * @package Cardflow\Client
  * @property GiftCardService $giftCards
- * @property LocationService $locations
  */
 final class CardflowClient
 {

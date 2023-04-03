@@ -5,7 +5,6 @@ namespace Cardflow\Client\Factories;
 use Cardflow\Client\HttpClient\CardflowHttpClientInterface;
 use Cardflow\Client\Services\AbstractService;
 use Cardflow\Client\Services\GiftCardService;
-use Cardflow\Client\Services\LocationService;
 
 final class ServiceFactory
 {
@@ -23,8 +22,7 @@ final class ServiceFactory
      * @var array<string, class-string>
      */
     protected static $classMap = [
-        'giftCards' => GiftCardService::class,
-        'locations' => LocationService::class,
+        'giftCards' => GiftCardService::class
     ];
 
     /**
