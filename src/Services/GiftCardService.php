@@ -69,4 +69,12 @@ final class GiftCardService extends AbstractService
 
         return new Transaction($this->httpClient, (array)$resource);
     }
+
+    public function validatekey(string $apikey, array $options = [])
+    {
+        $path = $this->buildApiPath([trim($apikey), 'validateapikey']);
+        $response = $this->httpClient->request('GET', $path, $options);
+        $resource = $this->parseApiResponse($response);
+        return $resource;
+    }
 }

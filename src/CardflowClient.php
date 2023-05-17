@@ -15,14 +15,13 @@ use Cardflow\Client\Services\GiftCardService;
  */
 final class CardflowClient
 {
-    public const VERSION = '1.0.0';
+    public const VERSION = '1.0.1';
     private const USER_AGENT_FORMAT = 'Cardflow/Cardflow-PHP/%s/PHP/%s/%s';
 
     /**
      * @var string
      */
-    //private $apiEndpoint = 'http://api.cardhub.nl/api/v1/';
-    private $apiEndpoint = 'http://api.cardhub.mv-ict.nl/api/v1/';
+    private $apiEndpoint = 'https://api.cardflow.nl/api/v1/';
 
     /**
      * @var CardflowHttpClientInterface
@@ -66,12 +65,13 @@ final class CardflowClient
 
     public function validateApiKey(): bool
     {
+/*
         try {
             $this->locations->all();
         } catch (ApiException $e) {
             return false;
         }
-
+*/
         return true;
     }
 

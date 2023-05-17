@@ -48,6 +48,7 @@ final class GiftCard extends AbstractResource
     {
         $code = str_replace(' ', '', $code);
         $code = str_replace('-', '', $code);
+        $code = strtoupper(trim($code));
 
         return $code;
     }
