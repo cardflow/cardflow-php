@@ -15,7 +15,7 @@ use Cardflow\Client\Services\GiftCardService;
  */
 final class CardflowClient
 {
-    public const VERSION = '1.0.1';
+    public const VERSION = '1.0.0';
     private const USER_AGENT_FORMAT = 'Cardflow/Cardflow-PHP/%s/PHP/%s/%s';
 
     /**
@@ -63,15 +63,13 @@ final class CardflowClient
         return $this->serviceFactory->__get($name);
     }
 
-    public function validateApiKey(): bool
+    public function validateApiKey( $apikey ): bool
     {
-/*
         try {
-            $this->locations->all();
+            $validated = $this->giftCards->validatekey( $apikey );
         } catch (ApiException $e) {
             return false;
         }
-*/
         return true;
     }
 
